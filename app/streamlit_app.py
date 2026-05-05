@@ -46,6 +46,21 @@ st.markdown("""
         border-radius: 10px;
         padding: 15px;
     }
+    div[data-testid="stMetric"] label {
+        color: #1A4731 !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+    }
+    div[data-testid="stMetric"] 
+    div[data-testid="stMetricValue"] {
+        color: #1A1A2E !important;
+        font-size: 1.8rem !important;
+        font-weight: 700 !important;
+    }
+    div[data-testid="stMetric"]
+    div[data-testid="stMetricDelta"] {
+        color: #6B9E7E !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -214,7 +229,7 @@ if df is not None and len(df) > 0:
 
     # ── KPI ROW ───────────────────────────────────────
     st.subheader("📊 Quality Overview")
-    k1,k2,k3,k4,k5,k6 = st.columns(6)
+    k1,k2,k3,k4,k5,k6,k7 = st.columns(7)
 
     score = score_data['overall_score']
     score_delta = (
@@ -232,10 +247,14 @@ if df is not None and len(df) > 0:
     )
     k4.metric("🎓 Grade", score_data['grade'])
     k5.metric(
+        "🔢 Total Cells",
+        f"{len(df) * len(df.columns):,}"
+    )
+    k6.metric(
         "❌ Missing Cells",
         f"{completeness['total_missing_cells']:,}"
     )
-    k6.metric(
+    k7.metric(
         "♻️ Duplicates",
         f"{duplicates['duplicate_rows']:,}"
     )
